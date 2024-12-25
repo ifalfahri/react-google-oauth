@@ -1,8 +1,8 @@
 //import useState and useEffect
 import React, { useState, useEffect } from 'react';
 
-//import useGoogleLogin
-import { useGoogleLogin } from '@react-oauth/google';
+//import useGoogleLogin and googleLogout
+import { useGoogleLogin, googleLogout } from '@react-oauth/google';
 
 //import axios
 import axios from 'axios';
@@ -75,6 +75,21 @@ const App = () => {
     }
   }, [accessToken, profile]);
 
+  // function to logout
+  const handleLogout = () => {
+
+    //call googleLogout
+    googleLogout();
+
+    //set state to null
+    setAccessToken(null);
+    setProfile(null);
+
+    //remove token and profile from localStorage
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('profile');
+  };
+
   return (
     <div className='container mt-5'>
       <div className="row justify-content-center">
@@ -102,6 +117,7 @@ const App = () => {
                         </tr>
                       </tbody>
                     </table>
+                    <button className="btn btn-danger" onClick={handleLogout}>Log out</button>
                   </div>
                 ) : (
                   <div className='text-center'>
